@@ -1,7 +1,8 @@
-package com.example.yunjunghyeon.demoapp_mvvm
+package com.example.yunjunghyeon.demoapp_mvvm.ui.main
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.example.yunjunghyeon.demoapp_mvvm.R
 
 class MainActivity : AppCompatActivity() {
 

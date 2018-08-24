@@ -64,7 +64,7 @@ class NetworkModule(val mBaseUrl: String) {
 
     @Provides
     @Singleton
-    fun provideUserTokenNetworkRepository(githubTokenApiClient: GithubTokenApiClient) = UserTokenNetworkRepository(githubTokenApiClient)
+    fun provideUserTokenNetworkRepository(githubTokenApiClient: GithubTokenApiClient) = UserTokenUseCase(githubTokenApiClient)
 
     @Provides
     @Singleton
@@ -72,7 +72,7 @@ class NetworkModule(val mBaseUrl: String) {
 
     @Provides
     @Singleton
-    fun provideUserDataNetworkRepository(githubApiClient: GithubApiClient) = UserDataNetworkRepository(githubApiClient)
+    fun provideUserDataNetworkRepository(githubApiClient: GithubApiClient) = UserDataUseCase(githubApiClient)
 
 
 }
