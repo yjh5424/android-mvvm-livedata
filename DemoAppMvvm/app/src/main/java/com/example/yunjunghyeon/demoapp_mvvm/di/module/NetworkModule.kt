@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder
 import dagger.Module
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import javax.inject.Named
 
 
 @Module
@@ -34,45 +35,41 @@ class NetworkModule(val mBaseUrl: String) {
          return GsonBuilder().create()
     }
 
+
     @Provides
     @Singleton
-    fun provideGithubApi(gson: Gson, okHttpClient: OkHttpClient): GithubApi {
+    @Named("retrofit")
+    fun provideRetrofit(gson : Gson,
+                        okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(mBaseUrl)
                 .client(okHttpClient)
                 .build()
-                .create(GithubApi::class.java)
     }
 
-    @Provides
-    @Singleton
-    fun provideGithubTokenApi(gson: Gson, okHttpClient: OkHttpClient) : GithubTokenApi {
-        return Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl("https://github.com/")
-                .client(okHttpClient)
-                .build()
-                .create(GithubTokenApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGithubTokenClient(githubTokenApi: GithubTokenApi) = GithubTokenApiClient(githubTokenApi)
-
-    @Provides
-    @Singleton
-    fun provideUserTokenNetworkRepository(githubTokenApiClient: GithubTokenApiClient) = UserTokenUseCase(githubTokenApiClient)
-
-    @Provides
-    @Singleton
-    fun provideGithubClient(githubApi: GithubApi) = GithubApiClient(githubApi)
-
-    @Provides
-    @Singleton
-    fun provideUserDataNetworkRepository(githubApiClient: GithubApiClient) = UserDataUseCase(githubApiClient)
-
-
+//    @Provides
+//    @Singleton
+//    fun provideGithubApi(gson: Gson, okHttpClient: OkHttpClient): GithubApi {
+//        return Retrofit.Builder()
+//                .addConverterFactory(GsonConverterFactory.create(gson))
+//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//                .baseUrl(mBaseUrl)
+//                .client(okHttpClient)
+//                .build()
+//                .create(GithubApi::class.java)
+//    }
+//
+//    @Provides
+//    @Singleton
+//    fun provideGithubTokenApi(gson: Gson, okHttpClient: OkHttpClient) : GithubTokenApi {
+//        return Retrofit.Builder()
+//                .addConverterFactory(GsonConverterFactory.create(gson))
+//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//                .baseUrl("https://github.com/")
+//                .client(okHttpClient)
+//                .build()
+//                .create(GithubTokenApi::class.java)
+//    }
 }

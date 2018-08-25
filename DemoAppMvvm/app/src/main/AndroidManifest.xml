@@ -3,6 +3,7 @@
     package="com.example.yunjunghyeon.demoapp_mvvm">
 
     <application
+        android:name="com.example.yunjunghyeon.demoapp_mvvm.di.app.BaseApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

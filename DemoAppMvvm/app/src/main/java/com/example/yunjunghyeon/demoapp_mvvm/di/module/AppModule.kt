@@ -2,14 +2,16 @@ package com.example.yunjunghyeon.demoapp_mvvm.di.module
 
 import android.app.Application
 import android.content.Context
+import com.example.yunjunghyeon.demoapp_mvvm.ViewModelFactory
+import com.example.yunjunghyeon.demoapp_mvvm.network.UserDataRepositoryImpl
 import dagger.Module
 import dagger.Provides
-import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Named
 import javax.inject.Singleton
 
 
 @Module
-class AppModule(private val app: Application) {
+class AppModule(val application: Application) {
 
     companion object {
         val USER_ID_KEY = "github_user_id"
@@ -17,14 +19,15 @@ class AppModule(private val app: Application) {
 
     @Provides
     @Singleton
-    fun provideApp() = app
+    fun provideApp() = application
 
 
     @Provides
     @Singleton
-    fun provideSharedPreferences() = app.getSharedPreferences(USER_ID_KEY,Context.MODE_PRIVATE)!!
+    fun provideSharedPreferences() = application.getSharedPreferences(USER_ID_KEY,Context.MODE_PRIVATE)!!
 
     @Provides
     @Singleton
-    fun provideCompositeDisposable() = CompositeDisposable()
+    fun viewModelFactory(@Named("user_data_repository") userDataRepositoryImpl : UserDataRepositoryImpl) = ViewModelFactory(userDataRepositoryImpl)
+
 }

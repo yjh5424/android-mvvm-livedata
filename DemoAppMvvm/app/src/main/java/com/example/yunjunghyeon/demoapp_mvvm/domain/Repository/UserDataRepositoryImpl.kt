@@ -7,7 +7,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 
-class UserDataUseCase(val githubApiClient: GithubApiClient) : UserDataRepository {
+class UserDataRepositoryImpl(val githubApiClient: GithubApiClient) : UserDataRepository {
 
     override fun getUserProfile(userName: String): Single<Person> = githubApiClient.getUserProfile(userName)
 
@@ -24,4 +24,6 @@ class UserDataUseCase(val githubApiClient: GithubApiClient) : UserDataRepository
                         }
             }
             .toList()
+
+
 }
