@@ -13,7 +13,7 @@ class ViewModelFactory @Inject constructor(
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when(modelClass){
             MainViewModel::class.java-> MainViewModel(userDataRepositoryImpl) as T
-            else -> modelClass as T
+            else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }
 }

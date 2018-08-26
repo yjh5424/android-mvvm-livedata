@@ -15,7 +15,7 @@ import javax.inject.Inject
 class MainActivity : BaseActivity<MainViewModel>() {
 
     lateinit var viewModel : MainViewModel
-
+    val Tag ="MainActivity_log_"
     override fun inject(){
         BaseApp.appComponent.inject(this)
     }
@@ -37,10 +37,10 @@ class MainActivity : BaseActivity<MainViewModel>() {
                when(it!!.status){
                    Status.ERROR -> Log.d("status","error")
                    Status.SUCCESS -> {
-                       Log.d("status","success")
-                       Log.d("status",it!!.data.toString())
+                       Log.d(Tag+"status","success")
+                       Log.d(Tag+"status",it!!.data.toString())
                    }
-                   Status.LOADING -> Log.d("status","loading")
+                   Status.LOADING -> Log.d(Tag+"status","loading")
                }
            })
         }
