@@ -8,26 +8,27 @@ import android.util.Log
 import com.example.yunjunghyeon.demoapp_mvvm.domain.model.Person
 import com.example.yunjunghyeon.demoapp_mvvm.domain.model.Repo
 import com.example.yunjunghyeon.demoapp_mvvm.domain.model.Response
+import android.arch.lifecycle.LiveData
 import com.example.yunjunghyeon.demoapp_mvvm.domain.model.Status
 import io.reactivex.Observable
 import com.example.yunjunghyeon.demoapp_mvvm.domain.model.Response.*
+import rx.subjects.PublishSubject
 
 class MainViewModel(val repositoryImpl: UserDataRepositoryImpl) : BaseViewModel(){
-    val response = MutableLiveData<Response<List<Pair<Repo, List<Person>>>>>()
 
-    fun loadRepositories(userName: String) :  MutableLiveData<Response<List<Pair<Repo, List<Person>>>>> {
-        repositoryImpl.getRepositories(userName)
-                .doOnSubscribe { response.value!!.loading()  }
+    val repositoriesOutStream = MutableLiveData<Response<List<Pair<Repo, List<Person>>>>>()
+
+    fun loadRepositories(userName: String) {
+        composite.add(repositoryImpl.getRepositories(userName)
+                .doOnSubscribe { repositoriesOutStream.value!!.loading()  }
                 .subscribe(
                         {
-                            response.value!!.scuucess(it)
+                            repositoriesOutStream.value!!.scuucess(it)
                         },
                         {
-                            response.value!!.error(it)
+                            repositoriesOutStream.value!!.error(it)
                         }
-                )
-
-        return response
+                ))
     }
 
 }

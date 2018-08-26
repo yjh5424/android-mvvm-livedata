@@ -30,10 +30,11 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
 
-        viewModel.run {
+        viewModel.loadRepositories("yjh5424")
 
-           this.loadRepositories("yjh5424").observe(this@MainActivity, Observer {
-               when(response.value!!.status){
+        viewModel.run {
+            repositoriesOutStream.observe(this@MainActivity, Observer {
+               when(it!!.status){
                    Status.ERROR -> Log.d("status","error")
                    Status.SUCCESS -> {
                        Log.d("status","success")

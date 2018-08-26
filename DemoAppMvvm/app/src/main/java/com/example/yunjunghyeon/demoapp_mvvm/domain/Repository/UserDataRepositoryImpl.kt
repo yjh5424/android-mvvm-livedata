@@ -11,7 +11,7 @@ class UserDataRepositoryImpl(val githubApiClient: GithubApiClient) : UserDataRep
 
     override fun getUserProfile(userName: String): Single<Person> = githubApiClient.getUserProfile(userName)
 
-    override fun getRepositories(userName: String): Single<List<Pair<Repo, List<Person>>>> = githubApiClient.getUserRepo(userName)
+    override fun getRepositories(userName: String): Observable<List<Pair<Repo, List<Person>>>> = githubApiClient.getUserRepo(userName)
             .flatMap {
                 Observable.fromIterable(it)
                         .flatMap {
@@ -24,6 +24,7 @@ class UserDataRepositoryImpl(val githubApiClient: GithubApiClient) : UserDataRep
                         }
             }
             .toList()
+            .toObservable()
 
 
 }
